@@ -1,0 +1,12 @@
+kind: Tackle
+apiVersion: tackle.konveyor.io/v1alpha1
+metadata:
+  name: tackle 
+  # ensure to use the correct namespace
+  namespace: openshift-mta
+spec:
+  # feature_auth_required: false
+  kai_solution_server_enabled: true
+  kai_llm_provider: openai  # enter the correct provider (all lower case)
+  # optional, pick a suitable model for your provider
+  kai_llm_model: llama-4-scout-17b-16e-w4a16
