@@ -1,7 +1,7 @@
 kind: Tackle
 apiVersion: tackle.konveyor.io/v1alpha1
 metadata:
-  name: tackle 
+  name: mta 
   # ensure to use the correct namespace
   namespace: openshift-mta
 spec:

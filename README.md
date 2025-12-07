@@ -20,8 +20,9 @@ https://github.com/konveyor-ecosystem/coolstore
 > Ensure the correct mta/tackle name and namespace is used throughout the installationa and configuration for the OpenShift MTA portions. Example snippets in the upstream and Red Hat docs vary in which one they use and this repo may have mixed references in code and files.
 
 - For the VSCode Dev LS plugin (Known as the *MTA Plugin* in the vscode repository) configure the plugin after installation  
- 
-https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#llm-provider-settings_configuring-llm  
+  - https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#configuring-developer-lightspeed-ide-settings_configuring-dev-lightspeed-ide 
+  - https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#llm-provider-settings_configuring-llm  
+- For demos best to **NOT** have auto-save on for files
 
 - Most likely you will need to use a bigger LLM for both the VSCode plugin usage and Solution Server, current one in use is MaaS hosted  
   *llama-4-scout-17b-16e-w4a16*  
@@ -33,7 +34,9 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
 - Keycloak: In most installations keycloak is required and it is normally tied into the MTA installation:  
 https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/installing_the_migration_toolkit_for_applications/index#red-hat-build-of-keycloak_installing-mta-ui  
 - example Solution Server settings to go in VSCode settings.json  
-*This example is based upon a keycloak secured mta tackle env with kai solution server.*
+*This example is based upon a keycloak secured mta tackle env with kai solution server.*  
+several ways to get to settings.json, one way go through ide Settings , Extensions, MTA , Solution Server (has link to settings.json)  
+https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#configuring-solution-server-settings-file_configuring-dev-lightspeed-ide  
   
   ```
       "mta-vscode-extension.solutionServer": {
@@ -50,7 +53,13 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
 
     }
   ```
-- for KAI Solution Server authentication login, the MTA console un/pwd can be used.
+- for KAI Solution Server authentication login, the MTA console un/pwd can be used.  
+
+
+#### Resetting Solution Server i.e. clearing current solution fixes when restarting the demo  
+- Force-deleting the PVC would do it (may need to bounce the pod as well).  
+- Alternatively, connecting to the postgres pod and drop all tables with psql, then bounce the pod  
+- 
 
 
 
