@@ -20,12 +20,30 @@ https://github.com/konveyor-ecosystem/coolstore
 > Ensure the correct mta/tackle name and namespace is used throughout the installationa and configuration for the OpenShift MTA portions. Example snippets in the upstream and Red Hat docs vary in which one they use and this repo may have mixed references in code and files.
 
 - For the VSCode Dev LS plugin (Known as the *MTA Plugin* in the vscode repository) configure the plugin after installation  
+There are 2 LLM related configurations that need to be set 1/ for the Analysis Server aka GenAI 2/ for the Solution Server
   - https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#configuring-developer-lightspeed-ide-settings_configuring-dev-lightspeed-ide 
   - https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#llm-provider-settings_configuring-llm  
 - For demos best to **NOT** have auto-save on for files
 
 - Most likely you will need to use a bigger LLM for both the VSCode plugin usage and Solution Server, current one in use is MaaS hosted  
   *llama-4-scout-17b-16e-w4a16*  
+
+Analysis Server (GenAI) example setting for provider-settings.yaml
+*there can be only one &active model* 
+this example is for a MaaS hosted vLLM served openai compatible configuration
+```
+
+  OpenShift: &active  # only one model can be active
+    environment:
+      OPENAI_API_KEY: "************************************" # Required
+    provider: ChatOpenAI
+    args:
+      model: llama-4-scout-17b-16e-w4a16 # Required
+      configuration:
+        baseURL: "https://<serving url>/v1"
+```
+
+#### Solution Server Notes
 - Solution Server can be installed and run several ways.  The preferred way is as part of an OpenShift MTA deployment.  Upstream documents and Red Hat Docs should both be reviewed.  
 https://github.com/konveyor/operator?tab=readme-ov-file#konveyor-operator-installation-on-okdopenshift  
 https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#tackle-enable-dev-lightspeed_solution-server-configurations  
@@ -65,17 +83,20 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
   - *if so, delete them all*
   - drop table kai_files, kai_hints, kai_incidents, kai_solution_hint_association, kai_solutions, kai_violation_hint_association, kai_violations, solution_after_file_association, solution_before_file_association ; 
   - *delete/bounce the kai-db pod*  
-  - *delete/bounce kai-api pod*
-  - *re-initialization (create new empty tables) doesn't occur until after some wait time with kai-api*
+  - *delete/bounce kai-api pod* not sure if this step is necessary
+  - *re-initialization (create new empty tables) doesn't seem to occur until after vcode is completely shutdown and restarted, not just closed*
   
-  **(untried approach: Force-deleting the PVC would do it (may need to bounce the pod as well).**
+  **(untried approach: Force-deleting the PVC would do it (may need to bounce the pod as well)).**
 
   #### Tips for Demoing
   - ensure you are using the correct profile in DevLightspeed 
   - turn off auto-save feature for files in vscode
   - possibly reset connection to custom rules everytime you initially start up a demo  
-  - ensure LLM configurations  are correct for initial analysis and solution server  
+  - ensure LLM configurations  are correct for analysis server (GenAI) and solution server  
   - delete tables for kai-db pod and bounce pod and also kai-api to clean up solution server hints.  
+    - Need to also completely quit/kill vscode and restart to reset solution server connection and auto create new tables
+  - When using solution server feature, and manually adjusting suggested genai code update,
+    - as of 8 Dec 2025 ensure to replace the entire suggested inserted code, even if that means literally copying over some lines with the exact same suggested changes, as solution server seems to get confused and messes up the hints for other follow on files that need the change.
 
 
 
