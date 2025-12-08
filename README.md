@@ -59,7 +59,14 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
 #### Resetting Solution Server i.e. clearing current solution fixes when restarting the demo  
 - Force-deleting the PVC would do it (may need to bounce the pod as well).  
 - Alternatively, connecting to the postgres pod and drop all tables with psql, then bounce the pod  
-- 
+  - *open a terminal for the db pod*
+  - psql -U kai
+  - *check to see if tables are present*
+  - \dt
+  - *if so, delete them all*
+  - drop table kai_files, kai_hints, kai_incidents, kai_solution_hint_association, kai_solutions, kai_violation_hint_association, kai_violations, solution_after_file_association, solution_before_file_association  
+  - *delete/bounce the kai-db pod*
+
 
 
 
