@@ -38,24 +38,24 @@ public class ProductService {
         return Transformers.toProduct(entity);
     }
 
-  private FileSystemAuditLogger auditLogger;
+    private FileSystemAuditLogger auditLogger;
 
-  @PostConstruct
-  public void init() throws AuditLoggingException {
-    // Initialize audit logger
-    AuditConfiguration config = new AuditConfiguration();
-    config.setLogDirectory("./device-inventory-audit-logs");
-    config.setAutoCreateDirectory(true);
-    auditLogger = new FileSystemAuditLogger(config);
+    @PostConstruct
+    public void init() throws AuditLoggingException {
+      // Initialize audit logger
+      AuditConfiguration config = new AuditConfiguration();
+      config.setLogDirectory("./device-inventory-audit-logs");
+      config.setAutoCreateDirectory(true);
+      auditLogger = new FileSystemAuditLogger(config);
 
-  }
-
-  @PreDestroy
-  public void cleanup() throws AuditLoggingException {
-    if (auditLogger != null) {
-      auditLogger.close();
     }
-  }
+
+    @PreDestroy
+    public void cleanup() throws AuditLoggingException {
+      if (auditLogger != null) {
+          auditLogger.close();
+      }
+    }
 
 
 }
