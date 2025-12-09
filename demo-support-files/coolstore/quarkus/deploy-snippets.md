@@ -42,3 +42,11 @@ podman push quay.io/dbrugger946/quarkus-coolstore:1.0
 
 
 ```
+
+scratchpad 
+```
+mvn clean compile package
+podman build -f src/main/docker/Dockerfile.jvm -t quarkus/code-with-quarkus-jvm .
+podman tag localhost/quarkus/code-with-quarkus-jvm:latest quay.io/dbrugger946/quarkus-coolstore:1.0
+  podman push quay.io/dbrugger946/quarkus-coolstore:1.0
+ ```
