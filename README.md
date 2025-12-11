@@ -84,7 +84,7 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
   - drop table kai_files, kai_hints, kai_incidents, kai_solution_hint_association, kai_solutions, kai_violation_hint_association, kai_violations, solution_after_file_association, solution_before_file_association ; 
   - *delete/bounce the kai-db pod*  
   - *delete/bounce kai-api pod* not sure if this step is necessary
-  - *re-initialization (create new empty tables) doesn't seem to occur until after vcode is completely shutdown and restarted, not just closed*
+  - *re-initialization (create new empty tables) doesn't seem to occur until after quiting and restarting VSCode*
   
   **(untried approach: Force-deleting the PVC would do it (may need to bounce the pod as well)).**
 

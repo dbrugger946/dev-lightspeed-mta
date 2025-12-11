@@ -3,9 +3,12 @@
 *for showing different ways to build/deploy during demo*
 
 ### Basic steps
-- log into OCP and get in the quarkus branch
-- create the database
-- build/deploy the quarkus app using any of the following suggested approaches, or via a pipeline
+- log into OCP and get in the quarkus branch of the demo repo
+- create the database service
+- build/deploy the quarkus app using any of the following suggested approaches, or via a pipeline  
+
+*This version has the fixed **quarkus** branch*  
+https://github.com/dbrugger946/kai-coolstore
 
 https://quarkus.io/guides/deploying-to-kubernetes#defining-a-docker-registry  
 https://quarkus.io/guides/deploying-to-kubernetes#openshift  
