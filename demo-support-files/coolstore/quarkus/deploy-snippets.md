@@ -30,14 +30,14 @@ oc new-app --name=coolstore-database openshift/postgresql:latest \
 -e POSTGRESQL_PASSWORD=quarkus \
 -e POSTGRESQL_DATABASE=coolstore   
 ```
-** Depending upon quarkus app build/deploy approach and adjustments to application.properties file and project extensions **  
-** some of the following snippets may be useful **    
+**Depending upon quarkus app build/deploy approach and adjustments to application.properties file and project extensions**  
+**some of the following snippets may be useful**    
 
 ```
 mvn clean compile package -Dquarkus.kubernetes.deploy=true
 
 mvn clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true  
-*if creds aren't set for mvn push, but podman login established to quay.io, or make repo public*  
+# if creds aren't set for mvn push, but podman login established to quay.io, or make repo public 
 podman push quay.io/dbrugger946/quarkus-coolstore:1.0  
 
 mvn clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.kubernetes.deploy=true
@@ -51,5 +51,5 @@ scratchpad
 mvn clean compile package
 podman build -f src/main/docker/Dockerfile.jvm -t quarkus/code-with-quarkus-jvm .
 podman tag localhost/quarkus/code-with-quarkus-jvm:latest quay.io/dbrugger946/quarkus-coolstore:1.0
-  podman push quay.io/dbrugger946/quarkus-coolstore:1.0
+podman push quay.io/dbrugger946/quarkus-coolstore:1.0
  ```
