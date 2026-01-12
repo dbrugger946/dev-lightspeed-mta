@@ -38,10 +38,15 @@ oc new-app --name=coolstore-database openshift/postgresql:latest \
 *Be careful when using an approach on Mac that builds native  and/or the container image locally*  
 *It probably won't run on linux based OCP, unless made compatible*  
 
+
+### Snippets and notes
 ```
+# in general https://quarkus.io/guides/deploying-to-openshift
+
 # s2i many options
 # https://quarkus.io/guides/deploying-to-kubernetes#openshift  
-mvn clean package -Dquarkus.container-image.build=true  
+mvn quarkus:add-extension -Dextensions="openshift"
+mvn -f src/main/resources/poms/s2i-pom.xml clean package -Dquarkus.profile=s2i -Dquarkus.container-image.build=true  
 # creates image on and imagestream in ocp project , local yml files are in target dir for deployment or use oc commands
 
 # builds and deploys via s2i
@@ -57,9 +62,9 @@ podman push quay.io/dbrugger946/quarkus-coolstore:1.0
 mvn clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.kubernetes.deploy=true
 podman push quay.io/dbrugger946/quarkus-coolstore:1.0  
 
-# if you have a native build profile and also want to skip tests
+# if you have a native build and also want to skip tests
 # this just builds a native executable lots of options
-./mvnw install -Dnative -DskipTests -Dquarkus.native.container-build=true
+mvn install -Dnative -DskipTests -Dquarkus.native.container-build=true
 # see https://quarkus.io/guides/building-native-image
 # include creating container image
 mvn package -Dnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
