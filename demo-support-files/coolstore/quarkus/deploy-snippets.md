@@ -34,15 +34,26 @@ oc new-app --name=coolstore-database openshift/postgresql:latest \
 -e POSTGRESQL_DATABASE=coolstore   
 ```
 **Depending upon quarkus app build/deploy approach and adjustments to application.properties file and project extensions**  
-**some of the following snippets may be useful**    
+**some of the following snippets may be useful**  
+*Be careful when using an approach on Mac that builds native  and/or the container image locally*  
+*It probably won't run on linux based OCP, unless made compatible*  
 
 ```
-mvn clean compile package -Dquarkus.kubernetes.deploy=true
+# s2i many options
+# https://quarkus.io/guides/deploying-to-kubernetes#openshift  
+mvn clean package -Dquarkus.container-image.build=true  
+# creates image on and imagestream in ocp project , local yml files are in target dir for deployment or use oc commands
 
+# builds and deploys via s2i
+mvn clean compile package -Dquarkus.openshift.deploy=true
+
+# OCP Binary build - upload app, ocp merges it to builder image (also other approaches here jib, docker, buildpacks...)
+# https://quarkus.io/guides/container-image#openshift 
 mvn clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true  
 # if creds aren't set for mvn push, but podman login established to quay.io, or make repo public 
 podman push quay.io/dbrugger946/quarkus-coolstore:1.0  
 
+# native build approaches, some assume "native" profile set in pom.xml -Pnative else -Dnative
 mvn clean package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.kubernetes.deploy=true
 podman push quay.io/dbrugger946/quarkus-coolstore:1.0  
 
@@ -55,7 +66,7 @@ mvn package -Dnative -Dquarkus.native.container-build=true -Dquarkus.container-i
 
 ```
 
-scratchpad 
+scratchpad some of these examples are linux specfic Won't work on Mac  
 ```
 mvn clean compile package
 podman build -f src/main/docker/Dockerfile.jvm -t quarkus/code-with-quarkus-jvm .
