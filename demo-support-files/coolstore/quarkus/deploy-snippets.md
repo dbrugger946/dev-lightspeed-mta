@@ -44,12 +44,14 @@ oc new-app --name=coolstore-database openshift/postgresql:latest \
 # in general https://quarkus.io/guides/deploying-to-openshift
 
 # s2i many options
+oc new-app openshift/ubi8-openjdk-21:1.18~https://github.com/dbrugger946/kai-coolstore.git#quarkus --name coolstore
 # https://quarkus.io/guides/deploying-to-kubernetes#openshift  
 mvn quarkus:add-extension -Dextensions="openshift"
 mvn -f src/main/resources/poms/s2i-pom.xml clean package -Dquarkus.profile=s2i -Dquarkus.container-image.build=true  
 # creates image on and imagestream in ocp project , local yml files are in target dir for deployment or use oc commands
 
-# builds and deploys via s2i
+# using default pom.xml and applications.properties in this project does local app build, local container build, pushes out to OCP
+# won't work on Mac as needs to be linux build
 mvn clean compile package -Dquarkus.openshift.deploy=true
 
 # OCP Binary build - upload app, ocp merges it to builder image (also other approaches here jib, docker, buildpacks...)
