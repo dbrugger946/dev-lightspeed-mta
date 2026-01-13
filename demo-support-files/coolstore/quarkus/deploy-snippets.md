@@ -43,18 +43,22 @@ oc new-app --name=coolstore-database openshift/postgresql:latest \
 ```
 # in general https://quarkus.io/guides/deploying-to-openshift
 
-# s2i many options
+# s2i many options  
+# https://quarkus.io/guides/deploying-to-openshift-s2i-howto  
 oc new-app openshift/ubi8-openjdk-21:1.18~https://github.com/dbrugger946/kai-coolstore.git#quarkus --name coolstore
 # https://quarkus.io/guides/deploying-to-kubernetes#openshift  
 mvn quarkus:add-extension -Dextensions="openshift"
-mvn -f src/main/resources/poms/s2i-pom.xml clean package -Dquarkus.profile=s2i -Dquarkus.container-image.build=true  
-# creates image on and imagestream in ocp project , local yml files are in target dir for deployment or use oc commands
+mvn -f ./s2i-pom.xml clean package -Dquarkus.profile=s2i -Dquarkus.container-image.build=true
+# binary build *local app build then creates image and imagestream in ocp project*
+# local yml files are in target dir for deployment or use oc commands
 
 # using default pom.xml and applications.properties in this project does local app build, local container build, pushes out to OCP
 # won't work on Mac as needs to be linux build
 mvn clean compile package -Dquarkus.openshift.deploy=true
 
-# OCP Binary build - upload app, ocp merges it to builder image (also other approaches here jib, docker, buildpacks...)
+# OCP Binary build *non s2i approach* - upload app, ocp merges it to builder image (also other approaches here jib, docker, buildpacks...)
+# adding push will push it to named repository
+# confirm quarkus extensions and hierarchy
 # https://quarkus.io/guides/container-image#openshift 
 mvn clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true  
 # if creds aren't set for mvn push, but podman login established to quay.io, or make repo public 
