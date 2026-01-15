@@ -47,9 +47,17 @@ this example is for a MaaS hosted vLLM served openai compatible configuration
 - Solution Server can be installed and run several ways.  The preferred way is as part of an OpenShift MTA deployment.  Upstream documents and Red Hat Docs should both be reviewed.  
 https://github.com/konveyor/operator?tab=readme-ov-file#konveyor-operator-installation-on-okdopenshift  
 https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#tackle-enable-dev-lightspeed_solution-server-configurations  
-- ensure the secret *kai-api-keys* is set correctly for the model and serving approach.  It has to be present before you have the solution server (kai server piece) installed
+- Before installing Solution Server: ensure the secret *kai-api-keys* is set correctly for the model and serving approach.  It has to be present before you have the solution server (kai server piece) installed  
+*openai compatible example*   
+```
+oc create secret generic kai-api-keys -n <namesapce for tackle instance> \
+--from-literal=OPENAI_API_BASE='<url to model in model server>/v1' \
+--from-literal=OPENAI_API_KEY='*******************************'
+
+```
 - Install Solution Server by appling changes to an existing tackle env or creating a new one.  Example yaml is in **yaml** directory  
 - Keycloak: In most installations keycloak is required and it is normally tied into the MTA installation:  
+*link for keycloak access info and mta related roles*  
 https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/installing_the_migration_toolkit_for_applications/index#red-hat-build-of-keycloak_installing-mta-ui  
 - example Solution Server settings to go in VSCode settings.json  
 *This example is based upon a keycloak secured mta tackle env with kai solution server.*  
@@ -59,7 +67,7 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
   ```
       "mta-vscode-extension.solutionServer": {
 
-        "url": "https://mta-openshift-mta.apps.cluster-jd6wh.dynamic.redhatworkshops.io/hub/services/kai/api",
+        "url": "<mta hub console route url>/hub/services/kai/api",
 
         "enabled": true,
         "auth": {
@@ -72,6 +80,8 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
     }
   ```
 - for KAI Solution Server authentication login, the MTA console un/pwd can be used.  
+  - the un/pwd is usually a secret *something*-mta-rhsso
+- If authentication is not set in the tackle during the solution server setup then adjust the above to "enabled": false  
 
 
 #### Resetting Solution Server i.e. clearing current solution fixes when restarting the demo   
