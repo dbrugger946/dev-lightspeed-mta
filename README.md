@@ -92,9 +92,11 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
   - \dt
   - *if so, delete them all*
   - drop table kai_files, kai_hints, kai_incidents, kai_solution_hint_association, kai_solutions, kai_violation_hint_association, kai_violations, solution_after_file_association, solution_before_file_association ; 
-  - *delete/bounce the kai-db pod*  
-  - *delete/bounce kai-api pod* not sure if this step is necessary
-  - *re-initialization (create new empty tables) doesn't seem to occur until after quiting and restarting VSCode, or more importantly resetting the solution server connection from the MTA Analysis View*
+  - optional *delete/bounce the kai-db pod*  
+  - *delete/bounce kai-api pod* 
+  - *quit and restart VSCode*  
+    - to re-initialization (create new empty tables) need to hard reset the solution server connection from the MTA Analysis View  
+    - to ensure it worked go into MTA Analysis View and see connection is restored  "Generative AI is enabled"   
   
   **(untried approach: Force-deleting the PVC would do it (may need to bounce the pod as well)).**
 
