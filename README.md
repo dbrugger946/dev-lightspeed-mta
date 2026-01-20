@@ -1,4 +1,4 @@
-### Setup and Running RHOne 2026  Developer Lightspeed for MTA Demo
+## Setup and Running RHOne 2026  Developer Lightspeed for MTA Demo
 
 
 #### Relevant setup references
@@ -15,10 +15,11 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
 https://github.com/konveyor-ecosystem/coolstore
 
 
-#### Setup Steps and Tips
+### Setup Steps and Tips
 
-> Ensure the correct mta/tackle name and namespace is used throughout the installationa and configuration for the OpenShift MTA portions. Example snippets in the upstream and Red Hat docs vary in which one they use and this repo may have mixed references in code and files.
+> Ensure the correct mta/tackle name and namespace is used throughout the installation and configuration for the OpenShift MTA portions. Example snippets in the upstream and Red Hat docs vary in which one they use and this repo may have mixed references in code and files.
 
+#### VSCode Plugin aka MTA Plugin Setup
 - For the VSCode Dev LS plugin (Known as the *MTA Plugin* in the vscode repository) configure the plugin after installation  
 There are 2 LLM related configurations that need to be set 1/ for the Analysis Server aka GenAI 2/ for the Solution Server
   - https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#configuring-developer-lightspeed-ide-settings_configuring-dev-lightspeed-ide 
@@ -43,14 +44,14 @@ this example is for a MaaS hosted vLLM served openai compatible configuration
         baseURL: "https://<serving url>/v1"
 ```
 
-#### Solution Server Notes
+#### Solution Server Notes and Installation
 - Solution Server can be installed and run several ways.  The preferred way is as part of an OpenShift MTA deployment.  Upstream documents and Red Hat Docs should both be reviewed.  
 https://github.com/konveyor/operator?tab=readme-ov-file#konveyor-operator-installation-on-okdopenshift  
 https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#tackle-enable-dev-lightspeed_solution-server-configurations  
 - Before installing Solution Server: ensure the secret *kai-api-keys* is set correctly for the model and serving approach.  It has to be present before you have the solution server (kai server piece) installed  
 *openai compatible example*   
 ```
-oc create secret generic kai-api-keys -n <namesapce for tackle instance> \
+oc create secret generic kai-api-keys -n <namesapce for tackle/mta instance> \
 --from-literal=OPENAI_API_BASE='<url to model in model server>/v1' \
 --from-literal=OPENAI_API_KEY='*******************************'
 
@@ -67,7 +68,7 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
   ```
       "mta-vscode-extension.solutionServer": {
 
-        "url": "<mta hub console route url>/hub/services/kai/api",
+        "url": "<mta/tackle hub console route url>/hub/services/kai/api",
 
         "enabled": true,
         "auth": {
@@ -81,7 +82,7 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
   ```
 - for KAI Solution Server authentication login, the MTA console un/pwd can be used.  
   - the un/pwd is usually a secret *something*-mta-rhsso
-- If authentication is not set in the tackle during the solution server setup then adjust the above to "enabled": false  
+- If authentication is not set in tackle/mta during the solution server setup then adjust the above snippet to "enabled": false  
 
 
 #### Resetting Solution Server i.e. clearing current solution fixes when restarting the demo   
@@ -96,7 +97,7 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
   - *delete/bounce kai-api pod* 
   - *quit and restart VSCode*  
     - to re-initialization (create new empty tables) need to hard reset the solution server connection from the MTA Analysis View  
-    - to ensure it worked go into MTA Analysis View and see connection is restored  "Generative AI is enabled"   
+    - to ensure it worked go into MTA Analysis View after restarting and you should NOT see a yellow banner/notification the says "Solution Server Disconnected" 
   
   **(untried approach: Force-deleting the PVC would do it (may need to bounce the pod as well)).**
 

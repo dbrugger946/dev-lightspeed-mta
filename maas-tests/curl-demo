@@ -1,5 +1,5 @@
 curl -X 'POST' \
-    'https://llama-4-scout-17b-16e-w4a16-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1/completions' \
+    '<LLM server url>:443/v1/completions' \
     -H 'accept: application/json' \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer ead79fb09a20439f65e194863faf835f' \
