@@ -57,7 +57,7 @@ oc create secret generic kai-api-keys -n <namesapce for tackle/mta instance> \
 
 ```
 - Install Solution Server by appling changes to an existing tackle env or creating a new one.  Example yaml is in **yaml** directory  
-- Keycloak: In most installations keycloak is required and it is normally tied into the MTA installation:  
+- Keycloak: In most installations keycloak is required and it is normally included as part of the MTA/Tackle installation:  
 *link for keycloak access info and mta related roles*  
 https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/installing_the_migration_toolkit_for_applications/index#red-hat-build-of-keycloak_installing-mta-ui  
 - example Solution Server settings to go in VSCode settings.json  
@@ -80,9 +80,12 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
 
     }
   ```
-- for KAI Solution Server authentication login, the MTA console un/pwd can be used.  
-  - the un/pwd is usually a secret *something*-mta-rhsso
-- If authentication is not set in tackle/mta during the solution server setup then adjust the above snippet to "enabled": false  
+- for KAI Solution Server authentication login, the MTA console/Tackle un/pwd can be used.  
+  > NOTE: If Keycloak is used then it has a realm for MTA and the first time login into the mta-ui (mta/tackle console) the default credentials are:  
+  un: *admin* pwd: *Passw0rd!*  and after initial login the user is prompted to change the password
+  - if it becomes necessary to log into keycloak the un/pwd is in a secret usually **mta-keycloak-rhbk**
+    - https://<web_console_address>/auth/admin
+- *If authentication is not set in tackle/mta during the solution server setup then adjust the above snippet to "enabled": false*
 
 
 #### Resetting Solution Server i.e. clearing current solution fixes when restarting the demo   
