@@ -45,6 +45,7 @@ this example is for a MaaS hosted vLLM served openai compatible configuration
 ```
 
 #### Solution Server Notes and Installation
+> NOTE: At the time of this writing Solution Server is in Technology Preview and not supported for Production usage.
 - Solution Server can be installed and run several ways.  The preferred way is as part of an OpenShift MTA deployment.  Upstream documents and Red Hat Docs should both be reviewed.  
 https://github.com/konveyor/operator?tab=readme-ov-file#konveyor-operator-installation-on-okdopenshift  
 https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#tackle-enable-dev-lightspeed_solution-server-configurations  
@@ -85,7 +86,11 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
   un: *admin* pwd: *Passw0rd!*  and after initial login the user is prompted to change the password
   - if it becomes necessary to log into keycloak the un/pwd is in a secret usually **mta-keycloak-rhbk**
     - https://<web_console_address>/auth/admin
-- *If authentication is not set in tackle/mta during the solution server setup then adjust the above snippet to "enabled": false*
+- When the solution server settings are added in vscode and if authentication is enabled, then user will be prompted for the un/pwd,
+  - if it doesn't automatically, then bring up the command palette, and initiate the login via the command palette  
+    - *MTA: Configure Solution Server Credentials*  
+    - *MTA: Restart Solution Server* ...may also be needed before or after
+- If authentication is **not set** in tackle/mta during the solution server setup then adjust the above snippet to **"enabled": false**
 
 
 #### Resetting Solution Server i.e. clearing current solution fixes when restarting the demo   
