@@ -50,6 +50,7 @@ this example is for a MaaS hosted vLLM served openai compatible configuration
 https://github.com/konveyor/operator?tab=readme-ov-file#konveyor-operator-installation-on-okdopenshift  
 https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#tackle-enable-dev-lightspeed_solution-server-configurations  
 - Before installing Solution Server: ensure the secret *kai-api-keys* is set correctly for the model and serving approach.  It has to be present before you have the solution server (kai server piece) installed  
+https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/html-single/configuring_and_using_red_hat_developer_lightspeed_for_mta/index#tackle-llm-secret_solution-server-configurations  
 *openai compatible example*   
 ```
 oc create secret generic kai-api-keys -n <namesapce for tackle/mta instance> \
