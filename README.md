@@ -117,8 +117,6 @@ https://docs.redhat.com/en/documentation/migration_toolkit_for_applications/8.0/
   - ensure LLM configurations  are correct for analysis server (GenAI) and solution server  
   - delete tables for kai-db pod and bounce pod and also kai-api to clean up solution server hints.  
     - Need to also completely quit/kill vscode and restart to reset solution server connection and auto create new tables
-  - When using solution server feature, and manually adjusting suggested genai code update,
-    - as of 8 Dec 2025 ensure to replace the entire suggested inserted code, even if that means literally copying over some lines with the exact same suggested changes, as solution server seems to get confused and messes up the hints for other follow on files that need the change.
 
 
 
